@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Iframe Resize POC</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .content {
+            height: 500px;
+            background-color: #e3f2fd;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>External Iframe Content</h2>
+
+    <div class="content">
+        This box controls the iframe height
+    </div>
+
+    <script>
+        function sendSize() {
+            const height = document.documentElement.scrollHeight;
+            const width = document.documentElement.scrollWidth;
+
+            console.log('Iframe size:', height, width);
+
+            // We will use this later
+            window.parent.postMessage(
+                {
+                    type: 'IFRAME_RESIZE',
+                    height: height,
+                    width: width
+                },
+                '*'
+            );
+        }
+
+        window.addEventListener('load', sendSize);
+        window.addEventListener('resize', sendSize);
+    </script>
+
+</body>
+</html>
